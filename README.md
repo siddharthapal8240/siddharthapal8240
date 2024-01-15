@@ -1,6 +1,6 @@
 <h1 align="center">Hi 👋, I'm Siddhartha pal</h1>
 <h3 align="center">Frontend Enthusiast Explores the World of Data Structures and Backend Wizardry</h3>
-<img align="right" alt="Coding" width="400"src="https://cdn.dribbble.com/users/1162077/screenshots/3848914/media/7ed7d5ca074b48b328150e5a231e8d1f.gif">
+<img align="right" alt="Coding" width="400"src="https://i.pinimg.com/originals/e8/f4/53/e8f453469a3ec97ecd354df465d73913.gif">
 
 
 
