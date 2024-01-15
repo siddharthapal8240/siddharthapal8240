@@ -1,4 +1,4 @@
-[![MasterHead](https://cdn.dribbble.com/users/2514208/screenshots/9457622/media/30a1e1fa2d62e32d6b3e592518bfa6e5.gif)]()
+[![MasterHead](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLV5Geut9rpUynmk9Gp8QQTDimNu9aJE40hA&usqp=CAU)]()
 
 <h1 align="center">Hi 👋, I'm Siddhartha pal</h1>
 <h3 align="center">Frontend Enthusiast Explores the World of Data Structures and Backend Wizardry</h3>
