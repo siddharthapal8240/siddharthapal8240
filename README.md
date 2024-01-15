@@ -1,6 +1,6 @@
 <h1 align="center">Hi 👋, I'm Siddhartha pal</h1>
 <h3 align="center">Frontend Enthusiast Explores the World of Data Structures and Backend Wizardry</h3>
-<img align="right" alt="Coding" width="400" src="[https://cdn.dribbble.com/users/116207...](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2Flottieanimationchainstarters--59813501292017265%2F&psig=AOvVaw07yhY0S4djU52zD82Q9Fwx&ust=1705420814006000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjQnuHh34MDFQAAAAAdAAAAABAI)">
+<img align="right" alt="Coding" width="400" src="[[https://cdn.dribbble.com/users/116207...](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2Flottieanimationchainstarters--59813501292017265%2F&psig=AOvVaw07yhY0S4djU52zD82Q9Fwx&ust=1705420814006000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjQnuHh34MDFQAAAAAdAAAAABAI)](https://www.google.com/url?sa=i&url=https%3A%2F%2Foutlane.co%2Fnow%2Fnew-shot-programmer-animation%2F&psig=AOvVaw07yhY0S4djU52zD82Q9Fwx&ust=1705420814006000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjQnuHh34MDFQAAAAAdAAAAABAS)">
 
 
 
