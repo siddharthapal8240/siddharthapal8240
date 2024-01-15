@@ -1,3 +1,5 @@
+[![MasterHead](https://cdn.dribbble.com/users/2514208/screenshots/9457622/media/30a1e1fa2d62e32d6b3e592518bfa6e5.gif)]()
+
 <h1 align="center">Hi 👋, I'm Siddhartha pal</h1>
 <h3 align="center">Frontend Enthusiast Explores the World of Data Structures and Backend Wizardry</h3>
 <img align="right" alt="Coding" width="400"src="https://i.pinimg.com/originals/e8/f4/53/e8f453469a3ec97ecd354df465d73913.gif">
