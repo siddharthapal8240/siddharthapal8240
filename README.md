@@ -8,11 +8,8 @@
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=siddharthapal8240&label=Profile%20views&color=0e75b6&style=flat" alt="siddharthapal8240" /> </p>
 
-- 🔭 I’m currently working on [Spotify Clone](https://github.com/siddharthapal8240/Spotify-Clone)
 
 - 🌱 I’m currently learning **DSA & Backend**
-
-- 👯 I’m looking to collaborate on **My Own-Portfolio**
 
 - 💬 Ask me about **Web Development,DSA & As you wish😁**
 
