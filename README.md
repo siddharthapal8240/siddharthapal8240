@@ -13,7 +13,7 @@
 
 - 💬 Ask me about **Web Development,DSA & As you wish😁**
 
-- 📫 How to reach me **siddhartha.pal.official@gmail.com**
+- 📫 How to reach me **siddharthapal814@gmail.com**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
