@@ -3,7 +3,7 @@
 <div align="center">
 
 <a href="https://github.com/siddharthapal8240">
-  <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=500&size=18&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&height=30&lines=Config-driven+UI+systems+%7C+AI+agent+infra;React+%C2%B7+Next.js+%C2%B7+TypeScript+%C2%B7+Node.js;Building+production+systems+at+scale" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=500&size=18&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&height=30&lines=Config-driven+UI+systems+%7C+Full-Stack+Dev;React+%C2%B7+Next.js+%C2%B7+TypeScript+%C2%B7+Node.js;Building+production+systems+at+scale" alt="Typing SVG" />
 </a>
 
 <br/>
@@ -20,7 +20,7 @@
 
 ## About Me
 
-- SDE Intern at **Galaxy.ai** — building config-driven UI systems and AI agent infrastructure
+- SDE Intern at **Galaxy.ai** — building config-driven UI systems and full-stack products
 - B.Tech CSE @ **JIS College of Engineering** *(2022 – 2026 · GPA: 8.14)*
 - Shipped a config-driven UI framework — new AI models go live on web & mobile with **zero UI code changes**
 - Built an internal npm package of **15+ pure functions** for composable AI agent orchestration
