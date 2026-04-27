@@ -95,16 +95,18 @@ Voice-based interview sessions with real-time AI evaluation. Vapi AI handles con
 
 <br/>
 
-## Highlights
+<h2 align="center">Highlights</h2>
 
+<div align="center">
 <table>
 <tr>
-<td align="center" width="25%"><strong>3rd Place</strong><br/><sub>Diversion 2k24 · MLH Hackathon<br/>450+ participants</sub></td>
-<td align="center" width="25%"><strong>15+ Functions</strong><br/><sub>Internal npm package<br/>AI agent orchestration</sub></td>
-<td align="center" width="25%"><strong>Zero UI Changes</strong><br/><sub>Config-driven framework<br/>Web + Mobile shipping</sub></td>
-<td align="center" width="25%"><strong>Web Dev Lead</strong><br/><sub>JISCE Coding Club<br/>2022 – 2024</sub></td>
+<td align="center" width="25%"><img src="https://img.shields.io/badge/3rd_Place-58a6ff?style=for-the-badge" /><br/><sub>Diversion 2k24 · MLH Hackathon<br/>450+ participants</sub></td>
+<td align="center" width="25%"><img src="https://img.shields.io/badge/15+_Functions-58a6ff?style=for-the-badge" /><br/><sub>Internal npm package<br/>AI agent orchestration</sub></td>
+<td align="center" width="25%"><img src="https://img.shields.io/badge/Zero_UI_Changes-58a6ff?style=for-the-badge" /><br/><sub>Config-driven framework<br/>Web + Mobile shipping</sub></td>
+<td align="center" width="25%"><img src="https://img.shields.io/badge/Web_Dev_Lead-58a6ff?style=for-the-badge" /><br/><sub>JISCE Coding Club<br/>2022 – 2024</sub></td>
 </tr>
 </table>
+</div>
 
 <br/>
 
