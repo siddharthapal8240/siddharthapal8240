@@ -20,8 +20,12 @@
 
 ## About Me
 
-- SDE Intern at **Galaxy.ai** — building config-driven UI systems and full-stack products
-- B.Tech CSE @ **JIS College of Engineering** *(2022 – 2026 · GPA: 8.14)*
+<div align="center">
+  <img src="./assets/terminal.svg" alt="Terminal" width="680" />
+</div>
+
+<br/>
+
 - Shipped a config-driven UI framework — new AI models go live on web & mobile with **zero UI code changes**
 - Built an internal npm package of **15+ pure functions** for composable AI agent orchestration
 - Designed a **Trigger.dev + Inngest** fallback architecture for resilient job processing

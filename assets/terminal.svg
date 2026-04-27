@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 280" width="840" height="280" font-family="'JetBrains Mono', 'Fira Code', monospace">
+  <defs>
+    <clipPath id="t1"><rect x="24" y="0" height="280" width="0"><animate attributeName="width" from="0" to="800" dur="0.5s" begin="0.3s" fill="freeze"/></rect></clipPath>
+    <clipPath id="t2"><rect x="24" y="0" height="280" width="0"><animate attributeName="width" from="0" to="800" dur="0.4s" begin="0.9s" fill="freeze"/></rect></clipPath>
+    <clipPath id="t3"><rect x="24" y="0" height="280" width="0"><animate attributeName="width" from="0" to="800" dur="0.5s" begin="1.4s" fill="freeze"/></rect></clipPath>
+    <clipPath id="t4"><rect x="24" y="0" height="280" width="0"><animate attributeName="width" from="0" to="800" dur="0.4s" begin="2.0s" fill="freeze"/></rect></clipPath>
+    <clipPath id="t5"><rect x="24" y="0" height="280" width="0"><animate attributeName="width" from="0" to="800" dur="0.5s" begin="2.5s" fill="freeze"/></rect></clipPath>
+    <clipPath id="t6"><rect x="24" y="0" height="280" width="0"><animate attributeName="width" from="0" to="800" dur="0.4s" begin="3.1s" fill="freeze"/></rect></clipPath>
+  </defs>
+
+  <!-- Frame — uses GitHub's exact dark theme -->
+  <rect width="840" height="280" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+
+  <!-- Title bar -->
+  <rect width="840" height="28" rx="8" fill="#161b22"/>
+  <rect y="14" width="840" height="14" fill="#161b22"/>
+  <line x1="0" y1="28" x2="840" y2="28" stroke="#30363d" stroke-width="1"/>
+  <circle cx="16" cy="14" r="4.5" fill="#ff5f57"/>
+  <circle cx="32" cy="14" r="4.5" fill="#febc2e"/>
+  <circle cx="48" cy="14" r="4.5" fill="#28c840"/>
+  <text x="420" y="18" text-anchor="middle" fill="#484f58" font-size="10">sidhartha@dev:~</text>
+
+  <!-- Content -->
+  <g font-size="13.5">
+    <g clip-path="url(#t1)">
+      <text x="24" y="56" fill="#58a6ff">~$</text>
+      <text x="48" y="56" fill="#e6edf3"> neofetch</text>
+    </g>
+
+    <g clip-path="url(#t2)">
+      <text x="24" y="84" fill="#7ee787">siddhartha</text>
+      <text x="120" y="84" fill="#484f58">@</text>
+      <text x="132" y="84" fill="#7ee787">galaxy.ai</text>
+    </g>
+
+    <g clip-path="url(#t3)">
+      <text x="24" y="112" fill="#484f58">────────────────────────────</text>
+    </g>
+
+    <g clip-path="url(#t4)">
+      <text x="24" y="140" fill="#58a6ff">role</text>
+      <text x="80" y="140" fill="#484f58">~</text>
+      <text x="96" y="140" fill="#e6edf3">SDE Intern · Full-Stack Developer</text>
+
+      <text x="24" y="164" fill="#58a6ff">edu</text>
+      <text x="80" y="164" fill="#484f58">~</text>
+      <text x="96" y="164" fill="#e6edf3">B.Tech CSE '26 · JIS College of Engineering</text>
+
+      <text x="24" y="188" fill="#58a6ff">stack</text>
+      <text x="80" y="188" fill="#484f58">~</text>
+      <text x="96" y="188" fill="#e6edf3">React · Next.js · TypeScript · Node.js · Convex</text>
+
+      <text x="24" y="212" fill="#58a6ff">tools</text>
+      <text x="80" y="212" fill="#484f58">~</text>
+      <text x="96" y="212" fill="#e6edf3">Trigger.dev · Inngest · Clerk · Vercel · Firebase</text>
+    </g>
+
+    <g clip-path="url(#t5)">
+      <text x="24" y="240" fill="#58a6ff">uptime</text>
+      <text x="80" y="240" fill="#484f58">~</text>
+      <text x="96" y="240" fill="#f0883e">shipping code since 2022</text>
+    </g>
+
+    <g clip-path="url(#t6)">
+      <!-- Color palette dots -->
+      <text x="24" y="266" fill="#484f58">colors</text>
+      <text x="80" y="266" fill="#484f58">~</text>
+      <circle cx="102" cy="262" r="6" fill="#ff5f57"/>
+      <circle cx="120" cy="262" r="6" fill="#febc2e"/>
+      <circle cx="138" cy="262" r="6" fill="#28c840"/>
+      <circle cx="156" cy="262" r="6" fill="#58a6ff"/>
+      <circle cx="174" cy="262" r="6" fill="#bc8cff"/>
+      <circle cx="192" cy="262" r="6" fill="#f0883e"/>
+      <circle cx="210" cy="262" r="6" fill="#7ee787"/>
+      <circle cx="228" cy="262" r="6" fill="#e6edf3"/>
+    </g>
+  </g>
+
+  <!-- Blinking cursor after neofetch -->
+  <rect x="145" y="43" width="7" height="15" fill="#58a6ff">
+    <animate attributeName="opacity" values="1;1;0;0" dur="1s" begin="0.3s" repeatCount="indefinite"/>
+  </rect>
+</svg>
