@@ -1,16 +1,12 @@
-<div align="center">
-  <img src="./assets/hero.svg" alt="Siddhartha Pal — Terminal" width="100%" />
-</div>
-
-<br/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1b27,50:58a6ff,100:1a1b27&height=180&section=header&text=Siddhartha%20Pal&fontSize=42&fontColor=ffffff&fontAlignY=35&desc=Full-Stack%20Developer%20%C2%B7%20SDE%20Intern%20%40%20Galaxy.ai&descSize=16&descColor=8b949e&descAlignY=55&animation=fadeIn" width="100%" />
 
 <div align="center">
 
 <a href="https://github.com/siddharthapal8240">
-  <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=500&size=18&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=450&height=25&lines=Building+at+the+edge+of+AI+%2B+Web;Config-driven+systems+%7C+Agent+infra;Ship+fast%2C+ship+reliable" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=500&size=18&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&height=30&lines=Config-driven+UI+systems+%7C+AI+agent+infra;React+%C2%B7+Next.js+%C2%B7+TypeScript+%C2%B7+Node.js;Building+production+systems+at+scale" alt="Typing SVG" />
 </a>
 
-<br/><br/>
+<br/>
 
 <a href="https://linkedin.com/in/siddharthapal1234"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" /></a>
 <a href="https://twitter.com/siddhartha3108"><img src="https://img.shields.io/badge/-Twitter-000000?style=flat-square&logo=x&logoColor=white" /></a>
@@ -103,4 +99,4 @@ Voice-based interview sessions with real-time AI evaluation. Vapi AI handles con
   <img src="https://raw.githubusercontent.com/siddharthapal8240/siddharthapal8240/output/snake.svg" alt="Snake animation" width="100%" />
 </div>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,100:161b22&height=100&section=footer" width="100%" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1b27,50:58a6ff,100:1a1b27&height=100&section=footer" width="100%" />
