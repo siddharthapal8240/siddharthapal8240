@@ -83,7 +83,7 @@ Voice-based interview sessions with real-time AI evaluation. Vapi AI handles con
 ## GitHub Stats
 
 <div align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=siddharthapal8240&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117&icon_color=58a6ff&include_all_commits=true&count_private=true" />
+  <img height="170" src="https://github-readme-stats.vercel.app/api?username=siddharthapal8240&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117&icon_color=58a6ff&count_private=true" />
   <img height="170" src="https://github-readme-streak-stats.herokuapp.com/?user=siddharthapal8240&theme=github-dark-blue&hide_border=true&background=0d1117" />
 </div>
 
@@ -96,13 +96,15 @@ Voice-based interview sessions with real-time AI evaluation. Vapi AI handles con
 <br/>
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=siddharthapal8240&theme=darkhub&no-frame=true&no-bg=true&column=7&margin-w=6" width="100%" />
+  <img src="https://github-profile-trophy.vercel.app/?username=siddharthapal8240&theme=onestar&no-frame=true&no-bg=true&column=7&margin-w=6" />
 </div>
 
 <br/>
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/siddharthapal8240/siddharthapal8240/output/snake.svg" alt="Snake animation" width="100%" />
-</div>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/siddharthapal8240/siddharthapal8240/output/snake.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/siddharthapal8240/siddharthapal8240/output/snake.svg" />
+  <img alt="Snake animation" src="https://raw.githubusercontent.com/siddharthapal8240/siddharthapal8240/output/snake.svg" width="100%" />
+</picture>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1b27,50:58a6ff,100:1a1b27&height=100&section=footer" width="100%" />
