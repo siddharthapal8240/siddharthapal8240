@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bug Hunter — Siddhartha Pal</title>
+<meta name="description" content="A typing-based bug hunting game. Defeat the bugs by typing keywords from my tech stack." />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --muted: #8b949e;
+    --accent: #8b5cf6;
+    --accent-2: #ec4899;
+    --good: #7ee787;
+    --bad: #ff7b72;
+    --warn: #f0b429;
+  }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    overflow: hidden;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(ellipse at top, rgba(139,92,246,0.15), transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(236,72,153,0.10), transparent 60%),
+      var(--bg);
+  }
+  #app {
+    width: min(960px, 96vw);
+    height: min(640px, 92vh);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.15);
+  }
+  /* Terminal-style header */
+  .header {
+    height: 38px;
+    background: #21262d;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 5;
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; } .dot.y { background: #febc2e; } .dot.g { background: #28c840; }
+  .header .title { flex: 1; text-align: center; color: var(--muted); font-size: 12px; }
+  .header .right { color: var(--muted); font-size: 12px; }
+
+  canvas { display: block; width: 100%; height: calc(100% - 38px); }
+
+  /* HUD */
+  .hud {
+    position: absolute; top: 50px; left: 16px; right: 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    pointer-events: none; font-size: 14px; z-index: 4;
+  }
+  .hud .pill {
+    background: rgba(13,17,23,0.85);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 12px;
+    backdrop-filter: blur(6px);
+  }
+  .hud .pill b { color: var(--accent); margin-left: 6px; }
+  .hud .lives span { color: var(--bad); margin-right: 2px; letter-spacing: 2px; }
+  .hud .combo b { color: var(--warn); }
+
+  /* Overlays */
+  .overlay {
+    position: absolute; inset: 38px 0 0 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(13,17,23,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 10;
+    padding: 24px;
+  }
+  .overlay .card {
+    width: min(520px, 100%);
+    text-align: center;
+  }
+  h1 {
+    font-size: 44px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+  }
+  h2 { font-size: 28px; margin-bottom: 8px; color: var(--text); }
+  .sub { color: var(--muted); margin-bottom: 22px; font-size: 14px; line-height: 1.6; }
+  .btn {
+    background: var(--accent);
+    color: white;
+    border: 0;
+    padding: 12px 26px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(139,92,246,0.35);
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(139,92,246,0.5); }
+  .btn:active { transform: translateY(0); }
+  .btn.ghost { background: transparent; border: 1px solid var(--border); color: var(--text); box-shadow: none; margin-left: 8px; }
+  .stats-row {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 16px 0 24px;
+  }
+  .stat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .stat .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .stat .val { font-size: 22px; color: var(--accent); font-weight: 700; margin-top: 4px; }
+  .stat .val.warn { color: var(--warn); }
+  .stat .val.good { color: var(--good); }
+  .keys {
+    display: flex; gap: 6px; justify-content: center; margin-top: 12px;
+    color: var(--muted); font-size: 12px;
+  }
+  .keys kbd {
+    background: var(--bg); border: 1px solid var(--border); padding: 2px 8px; border-radius: 4px;
+    font-family: inherit; color: var(--text);
+  }
+  .footer-link {
+    position: absolute; bottom: 12px; left: 0; right: 0; text-align: center;
+    color: var(--muted); font-size: 11px; z-index: 5;
+  }
+  .footer-link a { color: var(--accent); text-decoration: none; }
+  .footer-link a:hover { text-decoration: underline; }
+  .mobile-warn {
+    display: none; color: var(--warn); font-size: 13px; margin-top: 14px;
+    background: rgba(240,180,41,0.08); border: 1px solid rgba(240,180,41,0.3);
+    padding: 10px; border-radius: 6px;
+  }
+  @media (max-width: 720px) { .mobile-warn { display: block; } }
+
+  /* Floating typed-letters animation */
+  @keyframes float-up { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-30px); } }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <div class="title">bug-hunter — siddhartha@galaxy:~/game</div>
+    <div class="right" id="fps">60 FPS</div>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <div class="hud" id="hud" style="display:none">
+    <div class="pill">SCORE<b id="score">0</b></div>
+    <div class="pill combo">COMBO<b id="combo">x1</b></div>
+    <div class="pill">WAVE<b id="wave">1</b></div>
+    <div class="pill lives" id="lives">❤❤❤</div>
+  </div>
+
+  <!-- Title screen -->
+  <div class="overlay" id="title-screen">
+    <div class="card">
+      <h1>BUG HUNTER</h1>
+      <div class="sub">
+        Bugs are falling on the production server. Type each bug's keyword to squash it before it hits the bottom.<br/>
+        <span style="color:var(--accent)">Typo? Combo resets. Don't typo.</span>
+      </div>
+      <button class="btn" id="start-btn">▶ Start Hunting</button>
+      <button class="btn ghost" id="how-btn">How to play</button>
+      <div class="keys">
+        <span><kbd>A–Z</kbd> type</span>
+        <span><kbd>Esc</kbd> pause</span>
+        <span><kbd>Backspace</kbd> retarget</span>
+      </div>
+      <div class="mobile-warn">⌨ This is a typing game and works best on desktop with a keyboard.</div>
+    </div>
+  </div>
+
+  <!-- Game over screen -->
+  <div class="overlay" id="over-screen" style="display:none">
+    <div class="card">
+      <h2 id="over-title">Production is down 💀</h2>
+      <div class="sub">The bugs got through. Better luck next deploy.</div>
+      <div class="stats-row">
+        <div class="stat"><div class="label">Score</div><div class="val" id="final-score">0</div></div>
+        <div class="stat"><div class="label">Best</div><div class="val good" id="final-best">0</div></div>
+        <div class="stat"><div class="label">Max Combo</div><div class="val warn" id="final-combo">x1</div></div>
+      </div>
+      <button class="btn" id="retry-btn">↻ Retry</button>
+      <button class="btn ghost" id="menu-btn">Main Menu</button>
+    </div>
+  </div>
+
+  <!-- Pause -->
+  <div class="overlay" id="pause-screen" style="display:none">
+    <div class="card">
+      <h2>Paused</h2>
+      <div class="sub">Take a breath. The bugs will wait.</div>
+      <button class="btn" id="resume-btn">▶ Resume</button>
+      <button class="btn ghost" id="quit-btn">End Run</button>
+    </div>
+  </div>
+
+  <div class="footer-link">
+    Built by <a href="https://github.com/siddharthapal8240">@siddharthapal8240</a> · A vanilla JS canvas game · No frameworks were harmed
+  </div>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  const titleScreen = document.getElementById('title-screen');
+  const overScreen = document.getElementById('over-screen');
+  const pauseScreen = document.getElementById('pause-screen');
+  const hud = document.getElementById('hud');
+  const scoreEl = document.getElementById('score');
+  const comboEl = document.getElementById('combo');
+  const waveEl = document.getElementById('wave');
+  const livesEl = document.getElementById('lives');
+  const fpsEl = document.getElementById('fps');
+
+  // Tech keywords pool (Siddhartha's stack)
+  const WORDS = {
+    easy: ['react','next','node','vite','git','npm','clerk','zod','sql','css','html','vercel','tsx','jsx','api'],
+    medium: ['nextjs','convex','firebase','express','postman','tailwind','zustand','typescript','mongodb','mysql','gemini'],
+    hard: ['shadcn-ui','framer-motion','trigger-dev','inngest','vapi-ai','restapi','javascript','frontend','backend','fullstack']
+  };
+
+  // Game state
+  let state = 'title';
+  let bugs = [];
+  let typedLetters = [];
+  let activeBugId = null;
+  let score = 0, combo = 1, maxCombo = 1, wave = 1, lives = 3;
+  let lastSpawn = 0, spawnInterval = 1800;
+  let startTime = 0, lastTime = 0;
+  let particles = [];
+  let shake = 0;
+  let bestScore = parseInt(localStorage.getItem('bugHunterBest') || '0', 10);
+
+  // Audio (Web Audio API for tiny SFX)
+  let audioCtx = null;
+  function ensureAudio() {
+    if (!audioCtx) {
+      try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){}
+    }
+  }
+  function beep(freq, dur=0.08, type='sine', vol=0.06) {
+    if (!audioCtx) return;
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.value = vol;
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+    o.stop(audioCtx.currentTime + dur);
+  }
+
+  // Resize
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const r = canvas.getBoundingClientRect();
+    canvas.width = r.width * dpr;
+    canvas.height = r.height * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  window.addEventListener('resize', resize);
+
+  // Bug factory
+  let bugIdCounter = 0;
+  function spawnBug() {
+    const r = canvas.getBoundingClientRect();
+    let pool;
+    if (wave < 3) pool = 'easy';
+    else if (wave < 6) pool = Math.random() < 0.6 ? 'easy' : 'medium';
+    else if (wave < 10) pool = Math.random() < 0.5 ? 'medium' : 'easy';
+    else pool = Math.random() < 0.4 ? 'hard' : 'medium';
+
+    // Avoid duplicate active words
+    const taken = new Set(bugs.map(b => b.word));
+    let word;
+    let tries = 0;
+    do {
+      word = WORDS[pool][Math.floor(Math.random() * WORDS[pool].length)];
+      tries++;
+    } while (taken.has(word) && tries < 20);
+
+    const x = 80 + Math.random() * (r.width - 160);
+    const speed = 0.35 + (wave - 1) * 0.05 + Math.random() * 0.2;
+    bugs.push({
+      id: ++bugIdCounter,
+      x, y: -30,
+      word, typed: 0,
+      speed,
+      hue: pool === 'easy' ? 280 : pool === 'medium' ? 320 : 0,
+      bob: Math.random() * Math.PI * 2,
+      legPhase: Math.random() * Math.PI * 2
+    });
+  }
+
+  function startGame() {
+    ensureAudio();
+    state = 'playing';
+    bugs = []; typedLetters = []; activeBugId = null;
+    score = 0; combo = 1; maxCombo = 1; wave = 1; lives = 3;
+    spawnInterval = 1800;
+    lastSpawn = performance.now();
+    startTime = performance.now();
+    particles = [];
+    shake = 0;
+    titleScreen.style.display = 'none';
+    overScreen.style.display = 'none';
+    pauseScreen.style.display = 'none';
+    hud.style.display = 'flex';
+    updateHud();
+  }
+
+  function endGame() {
+    state = 'over';
+    if (score > bestScore) {
+      bestScore = score;
+      localStorage.setItem('bugHunterBest', String(bestScore));
+    }
+    document.getElementById('final-score').textContent = score;
+    document.getElementById('final-best').textContent = bestScore;
+    document.getElementById('final-combo').textContent = 'x' + maxCombo;
+    document.getElementById('over-title').textContent =
+      score >= bestScore && score > 0 ? '🏆 New Best!' :
+      score === 0 ? 'Production is down 💀' : 'Run ended';
+    overScreen.style.display = 'flex';
+    hud.style.display = 'none';
+  }
+
+  function updateHud() {
+    scoreEl.textContent = score;
+    comboEl.textContent = 'x' + combo;
+    waveEl.textContent = wave;
+    livesEl.innerHTML = '<span>' + '❤'.repeat(lives) + '</span>' + '<span style="color:#30363d">' + '❤'.repeat(3-lives) + '</span>';
+  }
+
+  // Particles for hit feedback
+  function burst(x, y, color) {
+    for (let i=0;i<14;i++){
+      const a = Math.random() * Math.PI * 2;
+      const sp = 1 + Math.random() * 3;
+      particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,color});
+    }
+  }
+
+  // Input handling
+  window.addEventListener('keydown', (e) => {
+    if (state === 'title') {
+      if (e.key === 'Enter' || e.key === ' ') startGame();
+      return;
+    }
+    if (state === 'over') {
+      if (e.key === 'Enter' || e.key === ' ') startGame();
+      return;
+    }
+    if (e.key === 'Escape') {
+      if (state === 'playing') {
+        state = 'paused'; pauseScreen.style.display = 'flex';
+      } else if (state === 'paused') {
+        state = 'playing'; pauseScreen.style.display = 'none';
+      }
+      return;
+    }
+    if (state !== 'playing') return;
+
+    if (e.key === 'Backspace') {
+      // release current target
+      if (activeBugId !== null) {
+        const b = bugs.find(x => x.id === activeBugId);
+        if (b) b.typed = 0;
+        activeBugId = null;
+      }
+      return;
+    }
+
+    const ch = e.key.toLowerCase();
+    if (ch.length !== 1 || !/[a-z\-]/.test(ch)) return;
+
+    // If no active bug, find one starting with this character
+    if (activeBugId === null) {
+      const candidate = bugs
+        .filter(b => b.word[0] === ch)
+        .sort((a,b) => b.y - a.y)[0]; // lowest first (most urgent)
+      if (candidate) {
+        activeBugId = candidate.id;
+        candidate.typed = 1;
+        score += 1;
+        burst(candidate.x, candidate.y, '139,92,246');
+        beep(440 + Math.random()*100, 0.05, 'square', 0.04);
+      } else {
+        // miss
+        combo = 1;
+        beep(120, 0.06, 'sawtooth', 0.04);
+      }
+    } else {
+      const b = bugs.find(x => x.id === activeBugId);
+      if (!b) { activeBugId = null; return; }
+      const expected = b.word[b.typed];
+      if (ch === expected) {
+        b.typed++;
+        score += 1;
+        burst(b.x, b.y, '139,92,246');
+        beep(500 + b.typed * 40, 0.05, 'square', 0.04);
+        if (b.typed >= b.word.length) {
+          // KILL
+          score += b.word.length * 5 * combo;
+          combo++;
+          if (combo > maxCombo) maxCombo = combo;
+          burst(b.x, b.y, '126,231,135');
+          beep(800, 0.12, 'sine', 0.08);
+          shake = 6;
+          bugs = bugs.filter(x => x.id !== b.id);
+          activeBugId = null;
+        }
+      } else {
+        // wrong key
+        combo = 1;
+        b.typed = 0;
+        activeBugId = null;
+        beep(150, 0.08, 'sawtooth', 0.05);
+      }
+    }
+    updateHud();
+  });
+
+  // Game loop
+  function loop(now) {
+    requestAnimationFrame(loop);
+    const dt = Math.min(50, now - lastTime);
+    lastTime = now;
+
+    if (state === 'paused' || state === 'title' || state === 'over') {
+      drawBackground();
+      return;
+    }
+
+    // Spawn logic
+    if (now - lastSpawn > spawnInterval) {
+      spawnBug();
+      lastSpawn = now;
+    }
+
+    // Wave progression
+    const elapsed = (now - startTime) / 1000;
+    const newWave = Math.floor(elapsed / 15) + 1;
+    if (newWave !== wave) {
+      wave = newWave;
+      spawnInterval = Math.max(500, 1800 - wave * 100);
+      updateHud();
+    }
+
+    // Update bugs
+    const r = canvas.getBoundingClientRect();
+    for (const b of bugs) {
+      b.y += b.speed * dt * 0.06;
+      b.bob += dt * 0.005;
+      b.legPhase += dt * 0.015;
+    }
+    // Bugs that hit bottom
+    const escaped = bugs.filter(b => b.y > r.height - 20);
+    if (escaped.length > 0) {
+      for (const b of escaped) {
+        burst(b.x, r.height - 20, '255,123,114');
+        beep(80, 0.2, 'sawtooth', 0.08);
+      }
+      lives -= escaped.length;
+      combo = 1;
+      shake = 12;
+      bugs = bugs.filter(b => b.y <= r.height - 20);
+      if (activeBugId !== null && !bugs.find(x => x.id === activeBugId)) activeBugId = null;
+      updateHud();
+      if (lives <= 0) { endGame(); return; }
+    }
+
+    // Update particles
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.1; p.life -= 0.025;
+    }
+    particles = particles.filter(p => p.life > 0);
+
+    // Render
+    if (shake > 0) shake -= 0.6;
+    drawBackground();
+    drawBugs();
+    drawParticles();
+    drawTypingHint();
+  }
+
+  function drawBackground() {
+    const r = canvas.getBoundingClientRect();
+    const sx = (Math.random() - 0.5) * shake;
+    const sy = (Math.random() - 0.5) * shake;
+    ctx.save();
+    ctx.translate(sx, sy);
+
+    // Background gradient (subtle scan lines)
+    ctx.fillStyle = '#0d1117';
+    ctx.fillRect(0,0,r.width,r.height);
+
+    // Faint grid
+    ctx.strokeStyle = 'rgba(139,92,246,0.06)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < r.width; x += 40) {
+      ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,r.height); ctx.stroke();
+    }
+    for (let y = 0; y < r.height; y += 40) {
+      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(r.width,y); ctx.stroke();
+    }
+
+    // Bottom danger zone
+    const danger = ctx.createLinearGradient(0,r.height-60,0,r.height);
+    danger.addColorStop(0,'rgba(255,123,114,0)');
+    danger.addColorStop(1,'rgba(255,123,114,0.25)');
+    ctx.fillStyle = danger;
+    ctx.fillRect(0,r.height-60,r.width,60);
+    ctx.strokeStyle = 'rgba(255,123,114,0.5)';
+    ctx.setLineDash([6,6]);
+    ctx.beginPath(); ctx.moveTo(0,r.height-20); ctx.lineTo(r.width,r.height-20); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.restore();
+  }
+
+  function drawBugs() {
+    for (const b of bugs) {
+      const isActive = b.id === activeBugId;
+      const bobY = Math.sin(b.bob) * 2;
+      drawBug(b.x, b.y + bobY, b.hue, isActive, b.legPhase);
+      drawWord(b);
+    }
+  }
+
+  function drawBug(x, y, hue, active, legPhase) {
+    ctx.save();
+    ctx.translate(x, y);
+
+    // Shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+    ctx.beginPath();
+    ctx.ellipse(0, 22, 20, 5, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Glow if active
+    if (active) {
+      const grd = ctx.createRadialGradient(0,0,5,0,0,40);
+      grd.addColorStop(0, `hsla(${hue},80%,60%,0.5)`);
+      grd.addColorStop(1, `hsla(${hue},80%,60%,0)`);
+      ctx.fillStyle = grd;
+      ctx.fillRect(-40,-40,80,80);
+    }
+
+    // Legs (animated)
+    ctx.strokeStyle = `hsl(${hue},60%,30%)`;
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    for (let i = -1; i <= 1; i++) {
+      const lp = Math.sin(legPhase + i) * 4;
+      ctx.beginPath();
+      ctx.moveTo(-12, i * 6);
+      ctx.lineTo(-22, i * 6 + lp);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(12, i * 6);
+      ctx.lineTo(22, i * 6 - lp);
+      ctx.stroke();
+    }
+
+    // Body
+    ctx.fillStyle = `hsl(${hue},70%,50%)`;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 16, 14, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = `hsl(${hue},70%,30%)`;
+    ctx.beginPath();
+    ctx.ellipse(0, -10, 10, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Spots
+    ctx.fillStyle = `hsl(${hue},80%,30%)`;
+    ctx.beginPath(); ctx.arc(-6, 2, 2, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(6, 4, 2.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(0, -2, 2, 0, Math.PI * 2); ctx.fill();
+
+    // Eyes
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(-4, -10, 2.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(4, -10, 2.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#000';
+    ctx.beginPath(); ctx.arc(-4, -10, 1.2, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(4, -10, 1.2, 0, Math.PI * 2); ctx.fill();
+
+    // Antennae
+    ctx.strokeStyle = `hsl(${hue},70%,30%)`;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(-3,-16); ctx.lineTo(-7,-22); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(3,-16); ctx.lineTo(7,-22); ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function drawWord(b) {
+    ctx.save();
+    ctx.font = '600 14px JetBrains Mono, monospace';
+    ctx.textAlign = 'center';
+    const word = b.word;
+    const typed = word.slice(0, b.typed);
+    const rest = word.slice(b.typed);
+    const padX = 8, padY = 5;
+    const totalW = ctx.measureText(word).width;
+    const boxW = totalW + padX * 2;
+    const boxX = b.x - boxW / 2;
+    const boxY = b.y + 30;
+
+    // Background
+    ctx.fillStyle = b.id === activeBugId ? 'rgba(139,92,246,0.95)' : 'rgba(13,17,23,0.85)';
+    ctx.strokeStyle = b.id === activeBugId ? '#fff' : 'rgba(139,92,246,0.4)';
+    ctx.lineWidth = 1.5;
+    roundRect(ctx, boxX, boxY, boxW, 22, 6, true, true);
+
+    // Typed (bright)
+    ctx.fillStyle = b.id === activeBugId ? '#7ee787' : '#7ee787';
+    ctx.textAlign = 'left';
+    let cursorX = boxX + padX;
+    if (typed.length) {
+      ctx.fillText(typed, cursorX, boxY + 16);
+      cursorX += ctx.measureText(typed).width;
+    }
+    // Remaining
+    ctx.fillStyle = b.id === activeBugId ? '#fff' : '#c9d1d9';
+    ctx.fillText(rest, cursorX, boxY + 16);
+
+    ctx.restore();
+  }
+
+  function roundRect(c, x, y, w, h, r, fill, stroke) {
+    c.beginPath();
+    c.moveTo(x+r,y);
+    c.lineTo(x+w-r,y); c.quadraticCurveTo(x+w,y,x+w,y+r);
+    c.lineTo(x+w,y+h-r); c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    c.lineTo(x+r,y+h); c.quadraticCurveTo(x,y+h,x,y+h-r);
+    c.lineTo(x,y+r); c.quadraticCurveTo(x,y,x+r,y);
+    c.closePath();
+    if (fill) c.fill();
+    if (stroke) c.stroke();
+  }
+
+  function drawParticles() {
+    for (const p of particles) {
+      ctx.fillStyle = `rgba(${p.color},${p.life})`;
+      ctx.fillRect(p.x - 2, p.y - 2, 4, 4);
+    }
+  }
+
+  function drawTypingHint() {
+    const r = canvas.getBoundingClientRect();
+    if (activeBugId === null && bugs.length > 0) {
+      ctx.fillStyle = 'rgba(139,92,246,0.7)';
+      ctx.font = '12px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('type the first letter of any bug to lock on →', r.width / 2, r.height - 35);
+    }
+  }
+
+  // FPS counter
+  let frames = 0, lastFpsUpdate = 0;
+  function fpsLoop(now) {
+    requestAnimationFrame(fpsLoop);
+    frames++;
+    if (now - lastFpsUpdate > 1000) {
+      fpsEl.textContent = frames + ' FPS';
+      frames = 0; lastFpsUpdate = now;
+    }
+  }
+  requestAnimationFrame(fpsLoop);
+
+  // Buttons
+  document.getElementById('start-btn').onclick = startGame;
+  document.getElementById('retry-btn').onclick = startGame;
+  document.getElementById('menu-btn').onclick = () => {
+    state = 'title';
+    overScreen.style.display = 'none';
+    titleScreen.style.display = 'flex';
+  };
+  document.getElementById('resume-btn').onclick = () => {
+    state = 'playing';
+    pauseScreen.style.display = 'none';
+  };
+  document.getElementById('quit-btn').onclick = () => {
+    pauseScreen.style.display = 'none';
+    endGame();
+  };
+  document.getElementById('how-btn').onclick = () => {
+    alert('Bugs fall from the top with a tech keyword on each one.\n\nType the first letter of a bug to lock on, then type the rest of the word to squash it.\n\nBackspace = release current target.\nEsc = pause.\n\nDont typo — combo resets and your score multiplier goes back to x1.');
+  };
+
+  // Init
+  resize();
+  requestAnimationFrame((t) => { lastTime = t; loop(t); });
+})();
+</script>
+</body>
+</html>
