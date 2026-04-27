@@ -95,9 +95,16 @@ Voice-based interview sessions with real-time AI evaluation. Vapi AI handles con
 
 <br/>
 
-<div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=siddharthapal8240&theme=onestar&no-frame=true&no-bg=true&column=7&margin-w=6" />
-</div>
+## Highlights
+
+<table>
+<tr>
+<td align="center" width="25%"><strong>3rd Place</strong><br/><sub>Diversion 2k24 · MLH Hackathon<br/>450+ participants</sub></td>
+<td align="center" width="25%"><strong>15+ Functions</strong><br/><sub>Internal npm package<br/>AI agent orchestration</sub></td>
+<td align="center" width="25%"><strong>Zero UI Changes</strong><br/><sub>Config-driven framework<br/>Web + Mobile shipping</sub></td>
+<td align="center" width="25%"><strong>Web Dev Lead</strong><br/><sub>JISCE Coding Club<br/>2022 – 2024</sub></td>
+</tr>
+</table>
 
 <br/>
 
